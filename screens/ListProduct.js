@@ -11,28 +11,59 @@ import {getProducts} from '../src/actions/products';
 import {connect} from 'react-redux';
 
 import Card from '../components/card/Card';
+import {NavigationEvents} from 'react-navigation';
+import axios from 'axios';
 
 export class ListProduct extends Component {
-  static navigationOptions = {
-    title: 'Products',
-  };
+  // static navigationOptions = {
+  //   title: null,
+  //   headerMode: 'screen',
+  // };
 
   state = {
     products: [],
   };
 
-  async componentDidMount() {
-    await this.props.dispatch(getProducts());
-    this.setState({
-      products: this.props.products.productList.data.data,
-    });
+  componentDidMount() {
+    this.getProd();
+    // // const { sort, sortBy, limit, page, key } = this.state;
+    // axios.get(`http://192.168.1.18:4000/products`).then(response =>
+    //   this.setState({
+    //     products: response.data.data,
+    //   }),
+    // );
+    // console.log(this.state);
   }
 
+  getProd() {
+    // () => {
+    // const { sort, sortBy, limit, page, key } = this.state;
+    axios.get(`http://192.168.1.104:4000/products`).then(response =>
+      this.setState({
+        products: response.data.data,
+      }),
+    );
+    // console.log(this.state);
+    // };
+  }
+
+  // async componentDidMount() {
+  //   await this.props.dispatch(getProducts());
+  //   this.setState({
+  //     products: this.props.products.productList.data.data,
+  //   });
+  // }
+
   render() {
-    const item = this.state.products;
+    // const item = this.state.products;
     return (
       <React.Fragment>
-        <View style={{flex: 1}}>
+        <NavigationEvents
+          onDidFocus={() => {
+            this.getProd();
+          }}
+        />
+        <View style={{flex: 1, backgroundColor: '#fff'}}>
           <FlatList
             style={styles.container}
             data={this.state.products}
@@ -64,9 +95,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => {
-  return {
-    products: state.products,
-  };
-};
-export default connect(mapStateToProps)(ListProduct);
+// const mapStateToProps = state => {
+//   return {
+//     products: state.products,
+//   };
+// };
+// export default connect(mapStateToProps)(ListProduct);
+export default ListProduct;

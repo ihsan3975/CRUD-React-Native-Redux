@@ -1,12 +1,12 @@
 import React, {PureComponent} from 'react';
-import {StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image, Text, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {withNavigation} from 'react-navigation';
 
 class Card extends PureComponent {
   render() {
+    limdes = this.props.item.description.slice(0, 8) + '...';
     return (
-      // <View style={styles.container}>
       <TouchableOpacity
         style={styles.card}
         onPress={() =>
@@ -14,46 +14,71 @@ class Card extends PureComponent {
             id: this.props.item.id,
           })
         }>
-        <Image style={styles.cardImage} source={{uri: this.props.item.image}} />
-        <Text style={styles.cardText}>{this.props.item.name}</Text>
-        <Text style={{fontSize: 13, paddingLeft: 10, paddingBottom: 7}}>
-          stock: {this.props.item.quantity}
-        </Text>
+        <View style={{flexDirection: 'row'}}>
+          <Image
+            style={styles.cardImage}
+            source={{uri: this.props.item.image}}
+          />
+          <View>
+            {/* <Text style={styles.cardText}>{this.props.item.name}</Text> */}
+            <Text style={styles.cardText}>{this.props.item.name}</Text>
+            <View
+              style={{
+                backgroundColor: '#ebdcb2',
+                width: 80,
+                height: 18,
+                marginLeft: 5,
+                borderRadius: 90,
+              }}>
+              <Text
+                style={{
+                  fontSize: 13,
+                  paddingLeft: 10,
+                  paddingBottom: 7,
+                  color: '#232b2b',
+                }}>
+                <Text color="#232b2b">Stock: </Text>
+                {this.props.item.quantity}
+              </Text>
+            </View>
+            <Text style={{color: '#707c80', paddingLeft: 10}} numberOfLines={1}>
+              {limdes}
+            </Text>
+          </View>
+        </View>
       </TouchableOpacity>
-      // </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //     marginTop: 20,
-  //     backgroundColor: '#f5fcff'
-  // },
   card: {
-    backgroundColor: '#f0e0d0',
+    backgroundColor: '#fff',
     marginBottom: 10,
     marginLeft: '4%',
     width: '93%',
     shadowColor: '#000',
-    shadowOpacity: 0.1,
-    borderRadius: 7,
     shadowOffset: {
-      width: 100,
-      height: 100,
+      width: 0,
+      height: 4,
     },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
   },
   cardImage: {
-    width: '100%',
-    height: 150,
+    width: 105,
+    height: 110,
     resizeMode: 'cover',
-    borderRadius: 7,
+    borderRadius: 3,
+    borderColor: '#ddd',
   },
   cardText: {
     // padding: 10,
-    fontSize: 16,
+    fontSize: 21,
     paddingLeft: 10,
-    paddingTop: 7,
+    paddingTop: 15,
+    color: '#232b2b',
   },
 });
 

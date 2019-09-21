@@ -13,6 +13,12 @@ export const register = data => {
     payload: axios.post('http://192.168.1.18:4000/register', data),
   };
 };
+
+export const logout = () => {
+  return {
+    type: 'LOGOUT',
+  };
+};
 // export const getProfile = () => {
 //     return{
 //         type: 'GET_PROFILE',

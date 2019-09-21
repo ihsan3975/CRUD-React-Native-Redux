@@ -13,7 +13,7 @@ import {
 import {editProduct, getProductById} from '../src/actions/products';
 
 import {connect} from 'react-redux';
-import {NavigationEvents} from 'react-navigation';
+import {NavigationEvents, withNavigation} from 'react-navigation';
 import {Button} from 'react-native-elements';
 
 import Card from '../components/card/Card';
@@ -52,7 +52,10 @@ export class EditProduct extends Component {
     console.log(id);
     console.log(this.state);
     await this.props.dispatch(editProduct(id, this.state));
-    console.log('cobaain');
+    alert('Data Updated!');
+    this.props.navigation.navigate('ListProduct');
+
+    // console.log('cobaain');
   };
 
   render() {
@@ -156,4 +159,4 @@ const mapStateToProps = state => {
     products: state.products,
   };
 };
-export default connect(mapStateToProps)(EditProduct);
+export default withNavigation(connect(mapStateToProps)(EditProduct));

@@ -17,14 +17,15 @@ import {withNavigation} from 'react-navigation';
 
 // import {AsyncStorage} from '@react-native-community/async-storage';
 
-import {login} from '../src/actions/users';
+import {register} from '../src/actions/users';
 import {connect} from 'react-redux';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
-export class Login extends Component {
+export class Register extends Component {
   state = {
+    full_name: '',
     email: '',
     password: '',
     // token: '',
@@ -33,19 +34,20 @@ export class Login extends Component {
   handlerSubmit = async () => {
     // console.log('saya sebelum token');
     // console.log('disini woi');
-    await this.props.dispatch(login(this.state));
-    this.setState({
-      token: this.props.users.usersProfile,
-    });
+    await this.props.dispatch(register(this.state));
+    // this.setState({
+    //   token: this.props.users.usersProfile,
+    // });
     // console.log(this.props.users.token.data.token);
     // console.log('saya setelah token');
-
-    if (!this.props.users.token.data.token === true) {
-      alert('Wrong Email or Password');
-    } else {
-      AsyncStorage.setItem('token', this.props.users.token.data.token);
-      this.props.navigation.navigate('ListProduct');
-    }
+    alert('New Data Added!');
+    this.props.navigation.navigate('Login');
+    // if (!this.props.users.token.data.token === true) {
+    //   alert('Wrong Email or Password');
+    // } else {
+    //   AsyncStorage.setItem('token', this.props.users.token.data.token);
+    //   this.props.navigation.navigate('ListProduct');
+    // }
 
     // AsyncStorage.getItem('token').then(res =>
     //   this.setState({
@@ -60,8 +62,18 @@ export class Login extends Component {
         <TextInput
           style={styles.input}
           underlineColorAndroid="transparent"
+          placeholder="Full Name"
+          name="full_name"
+          required
+          onChangeText={full_name => this.setState({full_name})}
+        />
+
+        <TextInput
+          style={styles.input}
+          underlineColorAndroid="transparent"
           placeholder="Email"
           name="email"
+          required
           onChangeText={email => this.setState({email})}
         />
 
@@ -69,6 +81,7 @@ export class Login extends Component {
           style={styles.input}
           underlineColorAndroid="transparent"
           placeholder="Password"
+          required
           secureTextEntry
           name="password"
           onChangeText={password => this.setState({password})}
@@ -76,13 +89,13 @@ export class Login extends Component {
         <TouchableOpacity
           style={styles.submitButton}
           onPress={() => this.handlerSubmit()}>
-          <Text style={styles.submitButtonText}> Login </Text>
+          <Text style={styles.submitButtonText}> Register </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.submitButton}
-          onPress={() => this.props.navigation.navigate('Register')}>
-          <Text style={styles.submitButtonText}> Register </Text>
+          onPress={() => this.props.navigation.navigate('Login')}>
+          <Text style={styles.submitButtonText}> Back </Text>
         </TouchableOpacity>
       </View>
     );
@@ -125,4 +138,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withNavigation(connect(mapStateToProps)(Login));
+export default withNavigation(connect(mapStateToProps)(Register));

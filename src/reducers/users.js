@@ -50,6 +50,8 @@ const users = (state = initState, action) => {
         isLoading: false,
         isFulfilled: true,
       };
+    case 'LOGOUT':
+      return initState;
     // case 'GET_PROFILE_PENDING':
     //     return{
     //         ...state,

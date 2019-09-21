@@ -7,7 +7,7 @@ import categories from './categories';
 const rootReducers = combineReducers({
   users,
   products,
-  // categories,
+  categories,
 });
 
 export default rootReducers;

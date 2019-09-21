@@ -1,91 +1,140 @@
 import React, {Component} from 'react';
-import { StyleSheet, ScrollView, View, FlatList, Image, TouchableOpacity, Platform, BackHandler, Alert} from 'react-native';
-import { ThemeProvider, Button, Header} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/Ionicons'
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  FlatList,
+  Text,
+  AsyncStorage,
+  TouchableOpacity,
+} from 'react-native';
+import {getProducts} from '../src/actions/products';
 
+import {connect} from 'react-redux';
 
-import axios from 'axios'
+import Card from '../components/card/Card';
+import {NavigationEvents, withNavigation} from 'react-navigation';
+import axios from 'axios';
 
-import Card from './card/Card'
-import { Actions } from 'react-native-router-flux';
+export class Categories extends Component {
+  static navigationOptions = {
+    title: 'Categories',
+  };
 
-export default class DashBoard extends Component {
   state = {
-    products : []
+    categories: [],
+  };
+
+  componentDidMount() {
+    this.getCategories();
+    // // const { sort, sortBy, limit, page, key } = this.state;
+    // axios.get(`http://192.168.1.18:4000/products`).then(response =>
+    //   this.setState({
+    //     products: response.data.data,
+    //   }),
+    // );
+    // console.log(this.state);
   }
 
-  async componentDidMount () {
-    await axios.get(`http://192.168.1.18:4000/products`)
-    .then(response => 
+  getCategories() {
+    // () => {
+    // const { sort, sortBy, limit, page, key } = this.state;
+    axios.get(`http://192.168.1.18:4000/category`).then(response =>
       this.setState({
-        products: response.data.data
-      }))
+        categories: response.data.data,
+      }),
+    );
+    // console.log(this.state);
+    // };
   }
+
+  // async componentDidMount() {
+  //   await this.props.dispatch(getProducts());
+  //   this.setState({
+  //     products: this.props.products.productList.data.data,
+  //   });
+  // }
 
   render() {
-    const item = this.state.products
+    const item = this.state.categories;
     return (
       <React.Fragment>
-      <Header 
-        containerStyle={{
-          backgroundColor:'#755139FF',
-          paddingTop: 0,
-          height: 60
-        }}
-        leftComponent={{ icon: 'list', color: '#fff' }}
-        centerComponent={{ text: 'Category', style: { color: '#fff' } }}
-        rightComponent={{ icon: 'details', color: '#fff' }}
+        <NavigationEvents
+          onDidFocus={() => {
+            this.getCategories();
+          }}
         />
-      <View style={{flex:1}}>
-        <FlatList
-          style={styles.container} 
-          data={this.state.products}
-          renderItem={({item}) => <Card item={item}/>}
-          keyExtractor={({id}, index) => id.toString()}
-        />
-        <ScrollView>
-  
-          </ScrollView>
-          <View style={{height:45, flexDirection: 'row'}}>
-          <TouchableOpacity 
-            style={{flex:1}}
-            onPress={() => {
-            Actions.dashBoard()
+        <View
+          style={{flex: 1, backgroundColor: '#f1f2f6', position: 'relative'}}>
+          <FlatList
+            style={styles.container}
+            data={this.state.categories}
+            renderItem={({item}) => (
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  height: 40,
+                  backgroundColor: '#f0e0d0',
+                  margin: 10,
+                  alignItems: 'center',
+                  paddingTop: 5,
+                  borderRadius: 7,
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate('CategoryById', {
+                    id: item.id,
+                  })
+                }>
+                <Text style={{fontSize: 20}}>{item.category}</Text>
+              </TouchableOpacity>
+            )}
+            keyExtractor={({id}, index) => id.toString()}
+          />
+
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              backgroundColor: '#ffa502',
+              width: 40,
+              height: 40,
+              left: 300,
+              top: 500,
+              borderRadius: 100,
+              alignItems: 'center',
+              // paddingTop: 5,
             }}
-            >
-            <View style={{flex: 1, alignItems: 'center', borderTopRightRadius: 25}}>
-              <Icon style={{marginTop:7}} name='ios-albums' size={25} color='#deb887'/>
-            </View>
+            onPress={() => this.props.navigation.navigate('AddCategory')}>
+            <Text style={{fontSize: 30}}>+</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
-            onPress={() => {
-            Actions.addProduct()
-            }}          
-          >
-            <View style={{  alignItems: 'center', width:50, height:50, borderRadius: 15}}>
-              <Icon style={{marginTop: 9}} name='ios-add-circle' size={25} color='#deb887'/>
-            </View>
-            </TouchableOpacity>
-            <TouchableOpacity 
-              style={{flex:1}}
-              onPress={() => {
-                Actions.categories()
-              }}
-              >
-            <View style={{ alignItems: 'center', flex: 1, borderTopLeftRadius: 25 }}>
-              <Icon style={{marginTop: 7}} name='ios-apps' size={25} />
-            </View>
-            </TouchableOpacity>
-          </View>
-      </View>
+        </View>
       </React.Fragment>
     );
   }
 }
-
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    backgroundColor: '#f5fcff'
-  }
-})
+  MainContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5fcff',
+    padding: 11,
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#43A047',
+    padding: 12,
+    width: 280,
+    marginTop: 12,
+  },
+  text: {
+    color: '#fff',
+  },
+});
+
+// const mapStateToProps = state => {
+//   return {
+//     products: state.products,
+//   };
+// };
+// export default connect(mapStateToProps)(Categories);
+export default withNavigation(Categories);

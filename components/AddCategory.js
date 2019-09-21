@@ -9,29 +9,25 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {addProduct} from '../src/actions/products';
+import {addCategory} from '../src/actions/categories';
 import {withNavigation} from 'react-navigation';
 
-class AddProduct extends Component {
+class AddCategory extends Component {
   static navigationOptions = {
-    title: 'Add Product',
+    title: 'Add Category',
   };
 
   state = {
-    name: '',
-    description: '',
-    image: '',
-    id_category: '',
-    quantity: '',
+    category: '',
   };
 
   handlerSubmit = async () => {
     // window.event.preventDefault();
     console.log('woi ini dia');
     console.log(this.state);
-    await this.props.dispatch(addProduct(this.state));
+    await this.props.dispatch(addCategory(this.state));
     alert('New Product Added!');
-    this.props.navigation.navigate('ListProduct');
+    this.props.navigation.navigate('Categories');
     // this.props.history.push('/products');
     console.log('habis props dong');
   };
@@ -44,48 +40,15 @@ class AddProduct extends Component {
         <TextInput
           style={styles.input}
           underlineColorAndroid="transparent"
-          placeholder="Name Product"
-          name="name"
-          onChangeText={name => this.setState({name})}
-        />
-
-        <TextInput
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          placeholder="Description"
-          name="description"
-          onChangeText={description => this.setState({description})}
-        />
-
-        <TextInput
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          placeholder="Image"
-          name="image"
-          onChangeText={image => this.setState({image})}
-        />
-
-        <TextInput
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          placeholder="ID Category"
-          name="id_category"
-          onChangeText={id_category => this.setState({id_category})}
-        />
-
-        <TextInput
-          style={styles.input}
-          type="numeric"
-          underlineColorAndroid="transparent"
-          placeholder="Quantity"
-          name="quantity"
-          onChangeText={quantity => this.setState({quantity})}
+          placeholder="Category"
+          name="category"
+          onChangeText={category => this.setState({category})}
         />
 
         <TouchableOpacity
           style={styles.submitButton}
           onPress={() => this.handlerSubmit()}>
-          <Text style={styles.submitButtonText}> Add Product </Text>
+          <Text style={styles.submitButtonText}> Add Category </Text>
         </TouchableOpacity>
 
         {/* </KeyboardAvoidingView> */}
@@ -127,8 +90,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    products: state.products,
+    categories: state.categories,
   };
 };
 
-export default withNavigation(connect(mapStateToProps)(AddProduct));
+export default withNavigation(connect(mapStateToProps)(AddCategory));
