@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Image, StyleSheet, Text, View, FlatList} from 'react-native';
 import {Card, ListItem, Button, Icon} from 'react-native-elements';
 import {TabNavigator} from 'react-navigation';
-import Ionicons from 'react-native-ionicons';
+// import Icon from 'react-native-ionicons';
 import {createStore, applyMiddleware} from 'redux';
 import {createLogger} from 'redux-logger';
 import Rpm from 'redux-promise-middleware';
@@ -63,13 +63,52 @@ const MainNavigator = createBottomTabNavigator(
     Categories,
     Profile,
   },
+  // {
+  //   tabBarOptions: {
+  //     backGround: 'transparent',
+  //   },
+  // },
   {
     initialRouteName: 'Products',
-    navigationOptions: {
-      tabBarIcon: ({focused, tintColor}) => {
-        const iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-        return <Ionicons name={iconName} size={25} color={tintColor} />;
+    defaultNavigationOptions: ({navigation}) => ({
+      tabBarIcon: ({focused, horizontal, tintColor}) => {
+        const {routeName} = navigation.state;
+        if (routeName === 'Products') {
+          return (
+            <Icon
+              name="home"
+              // source={require('./src/public/icon/home.png')}
+              style={{
+                width: 20,
+                height: 20,
+              }}
+              // color="blue"
+            />
+          );
+        }
+        if (routeName === 'AddProduct') {
+          return (
+            <Icon
+              name="add-circle"
+              // source={require('./src/public/icon/home.png')}
+              style={{
+                width: 20,
+                height: 20,
+              }}
+              // color="blue"
+            />
+          );
+        }
+        if (routeName === 'Categories') {
+          return <Icon name="view-carousel" style={{width: 20, height: 20}} />;
+        } else {
+          return <Icon name="face" style={{width: 20, height: 20}} />;
+        }
       },
+    }),
+    tabBarOptions: {
+      activeTintColor: '#FF6F00',
+      inactiveTintColor: '#263238',
     },
   },
 );

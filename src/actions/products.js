@@ -9,7 +9,7 @@ import {AsyncStorage} from 'react-native';
 export const getProducts = () => {
   return {
     type: 'GET_PRODUCTS',
-    payload: axios.get(`http://192.168.1.31:4000/products`),
+    payload: axios.get(`http://192.168.1.104:4000/products`),
   };
 };
 
@@ -30,7 +30,7 @@ export const getProducts = () => {
 export const getProductById = productid => {
   return {
     type: 'GET_PRODUCT_BY_ID',
-    payload: axios.get(`http://192.168.1.31:4000/products/${productid}`),
+    payload: axios.get(`http://192.168.1.104:4000/products/${productid}`),
   };
 };
 
@@ -65,7 +65,7 @@ export const getProductById = productid => {
 export const addProduct = data => {
   return {
     type: 'ADD_PRODUCT',
-    payload: axios.post('http://192.168.1.31:4000/products/users', data),
+    payload: axios.post('http://192.168.1.104:4000/products/users', data),
   };
 };
 
@@ -82,7 +82,7 @@ export const editProduct = (productid, data) => {
   return {
     type: 'EDIT_PRODUCT',
     payload: axios.put(
-      `http://192.168.1.31:4000/products/users/${productid}`,
+      `http://192.168.1.104:4000/products/users/${productid}`,
       data,
     ),
   };
