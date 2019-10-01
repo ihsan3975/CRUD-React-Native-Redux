@@ -27,18 +27,13 @@ export class Login extends Component {
   state = {
     email: '',
     password: '',
-    // token: '',
   };
 
   handlerSubmit = async () => {
-    // console.log('saya sebelum token');
-    // console.log('disini woi');
     await this.props.dispatch(login(this.state));
     this.setState({
       token: this.props.users.usersProfile,
     });
-    // console.log(this.props.users.token.data.token);
-    // console.log('saya setelah token');
 
     if (!this.props.users.token.data.token === true) {
       alert('Wrong Email or Password');
@@ -57,33 +52,78 @@ export class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          placeholder="Email"
-          name="email"
-          onChangeText={email => this.setState({email})}
-        />
+        <View style={{alignItems: 'center', marginBottom: 30}}>
+          <Text style={{fontWeight: 'bold', fontSize: 30, marginTop: 40}}>
+            Sign In
+          </Text>
+        </View>
+        <View
+          style={{
+            marginLeft: 35,
+            marginRight: 35,
+            marginTop: 20,
+            marginBottom: 10,
+            borderRadius: 15,
+            backgroundColor: '#fff',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 3,
+            },
+            shadowOpacity: 0.29,
+            shadowRadius: 4.65,
 
-        <TextInput
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          placeholder="Password"
-          secureTextEntry
-          name="password"
-          onChangeText={password => this.setState({password})}
-        />
+            elevation: 7,
+          }}>
+          <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="Email"
+            name="email"
+            onChangeText={email => this.setState({email})}
+          />
+        </View>
+
+        <View
+          style={{
+            marginLeft: 35,
+            marginRight: 35,
+            marginTop: 10,
+            marginBottom: 10,
+            borderRadius: 15,
+            backgroundColor: '#fff',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 3,
+            },
+            shadowOpacity: 0.29,
+            shadowRadius: 4.65,
+
+            elevation: 7,
+          }}>
+          <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="Password"
+            secureTextEntry
+            name="password"
+            onChangeText={password => this.setState({password})}
+          />
+        </View>
         <TouchableOpacity
           style={styles.submitButton}
           onPress={() => this.handlerSubmit()}>
-          <Text style={styles.submitButtonText}> Login </Text>
+          <Text style={styles.submitButtonText}> SIGN IN </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.submitButton}
-          onPress={() => this.props.navigation.navigate('Register')}>
-          <Text style={styles.submitButtonText}> Register </Text>
-        </TouchableOpacity>
+        <View style={{alignItems: 'center', marginTop: 200}}>
+          <TouchableOpacity
+            style={{fontSize: 15}}
+            onPress={() => this.props.navigation.navigate('Register')}>
+            <Text style={styles.submitButtonText}> Sign Up </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -94,10 +134,8 @@ const styles = StyleSheet.create({
     paddingTop: 23,
   },
   input: {
-    margin: 15,
-    marginBottom: 0,
     paddingHorizontal: 10,
-    borderRadius: 4,
+    borderRadius: 15,
     borderColor: '#ccc',
     borderWidth: 1,
     fontSize: 16,
@@ -105,10 +143,21 @@ const styles = StyleSheet.create({
   submitButton: {
     alignItems: 'center',
     backgroundColor: '#F5DEB3',
-    padding: 10,
-    margin: 15,
-    height: 40,
-    borderRadius: 4,
+    padding: 15,
+    marginLeft: 85,
+    marginRight: 85,
+    marginTop: 15,
+    height: 50,
+    borderRadius: 40,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+
+    elevation: 7,
   },
   submitButtonText: {
     color: 'black',

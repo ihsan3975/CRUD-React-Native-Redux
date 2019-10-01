@@ -7,10 +7,17 @@ import {
   TextInput,
   StyleSheet,
   KeyboardAvoidingView,
+  Image,
+  Picker,
+  input,
+  // FlatList,
 } from 'react-native';
+import axios from 'axios';
 import {connect} from 'react-redux';
 import {addProduct} from '../src/actions/products';
+// import {getCategories} from '../src/actions/categories';
 import {withNavigation} from 'react-navigation';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 class AddProduct extends Component {
   static navigationOptions = {
@@ -26,70 +33,117 @@ class AddProduct extends Component {
   };
 
   handlerSubmit = async () => {
-    // window.event.preventDefault();
-    console.log('woi ini dia');
-    console.log(this.state);
-    await this.props.dispatch(addProduct(this.state));
-    alert('New Product Added!');
-    this.props.navigation.navigate('ListProduct');
-    // this.props.history.push('/products');
-    console.log('habis props dong');
+    if (
+      !this.state.name ||
+      !this.state.image ||
+      !this.state.description ||
+      !this.state.id_category ||
+      !this.state.quantity
+    ) {
+      alert('All Fields Are Required');
+    } else {
+      await this.props.dispatch(addProduct(this.state));
+      alert('New Product Added!');
+      this.props.navigation.navigate('ListProduct');
+      // console.log('habis props dong');
+    }
   };
 
   render() {
     return (
       <View style={styles.container}>
-        {/* <KeyboardAvoidingView style={styles.form} behavior="padding"> */}
-        {/* <ScrollView> */}
-        <TextInput
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          placeholder="Name Product"
-          name="name"
-          onChangeText={name => this.setState({name})}
-        />
+        <KeyboardAwareScrollView>
+          <View style={{alignItems: 'center'}}>
+            {/* <Text style={{fontSize: 35, paddingBottom: 10}}>
+              Add New Product
+            </Text> */}
+            <Image
+              source={require('../src/public/img/addProd.png')}
+              style={{
+                width: 150,
+                height: 150,
+                borderRadius: 30,
+                marginTop: 10,
+              }}
+            />
+          </View>
+          <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="Name Product"
+            name="name"
+            onChangeText={name => this.setState({name})}
+          />
 
-        <TextInput
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          placeholder="Description"
-          name="description"
-          onChangeText={description => this.setState({description})}
-        />
+          <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="Image"
+            name="image"
+            onChangeText={image => this.setState({image})}
+          />
 
-        <TextInput
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          placeholder="Image"
-          name="image"
-          onChangeText={image => this.setState({image})}
-        />
+          <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="Description"
+            name="description"
+            onChangeText={description => this.setState({description})}
+          />
 
-        <TextInput
-          style={styles.input}
-          underlineColorAndroid="transparent"
-          placeholder="ID Category"
-          name="id_category"
-          onChangeText={id_category => this.setState({id_category})}
-        />
+          {/* <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="Image"
+            name="image"
+            onChangeText={image => this.setState({image})}
+          /> */}
 
-        <TextInput
-          style={styles.input}
-          type="numeric"
-          underlineColorAndroid="transparent"
-          placeholder="Quantity"
-          name="quantity"
-          onChangeText={quantity => this.setState({quantity})}
-        />
+          <Picker
+            mode="dropdown"
+            style={styles.input}
+            placeholder="ID Category"
+            name="id_category"
+            selectedValue={this.state.id_category}
+            onValueChange={id_category => this.setState({id_category})}>
+            <Picker.Item label="---Category---" value="" />
+            <Picker.Item label="Bed" value="1" />
+            <Picker.Item label="Sofa" value="2" />
+            <Picker.Item label="Chest" value="3" />
+          </Picker>
 
-        <TouchableOpacity
-          style={styles.submitButton}
-          onPress={() => this.handlerSubmit()}>
-          <Text style={styles.submitButtonText}> Add Product </Text>
-        </TouchableOpacity>
+          {/* <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="ID Category"
+            name="id_category"
+            onChangeText={id_category => this.setState({id_category})}
+          /> */}
 
-        {/* </KeyboardAvoidingView> */}
-        {/* </KeyboardAvoidingView> */}
+          {/* <TextInput
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            placeholder="ID Category"
+            name="id_category"
+            // value={`${this.state.id_category}`}
+            onChangeText={id_category => this.setState({id_category})}
+          /> */}
+
+          <TextInput
+            style={styles.input}
+            type="numeric"
+            underlineColorAndroid="transparent"
+            placeholder="Quantity"
+            name="quantity"
+            onChangeText={quantity => this.setState({quantity})}
+          />
+
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={() => this.handlerSubmit()}>
+            <Text style={styles.submitButtonText}> Add Product </Text>
+          </TouchableOpacity>
+        </KeyboardAwareScrollView>
       </View>
     );
   }
@@ -97,7 +151,7 @@ class AddProduct extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 23,
+    alignContent: 'center',
   },
   input: {
     margin: 15,

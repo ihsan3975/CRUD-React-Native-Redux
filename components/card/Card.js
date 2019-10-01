@@ -1,5 +1,5 @@
-import React, {PureComponent} from 'react';
-import {StyleSheet, TouchableOpacity, Image, Text, View} from 'react-native';
+import React, {PureComponent, useState} from 'react';
+import {StyleSheet, TouchableOpacity, Image, Text, View, ImageBackground} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {withNavigation} from 'react-navigation';
 
@@ -15,13 +15,19 @@ class Card extends PureComponent {
           })
         }>
         <View style={{flexDirection: 'row'}}>
+        <ImageBackground style={styles.cardImage} source={{uri: 'https://media.istockphoto.com/vectors/caution-exclamation-mark-red-white-color-icon-isolated-vector-vector-id938976216?k=6&m=938976216&s=170667a&w=0&h=DLKR_3Bqw9tmgRwk8pnrfeNTBGEfxrccuwGI66zEQO4='}}>
           <Image
             style={styles.cardImage}
             source={{uri: this.props.item.image}}
+            // source={{uri: 'https://media.istockphoto.com/vectors/caution-exclamation-mark-red-white-color-icon-isolated-vector-vector-id938976216?k=6&m=938976216&s=170667a&w=0&h=DLKR_3Bqw9tmgRwk8pnrfeNTBGEfxrccuwGI66zEQO4='}}
           />
+        </ImageBackground>
+
           <View>
             {/* <Text style={styles.cardText}>{this.props.item.name}</Text> */}
-            <Text style={styles.cardText}>{this.props.item.name}</Text>
+            <Text style={styles.cardText}>
+              {this.props.item.name.slice(0, 20)}
+            </Text>
             <View
               style={{
                 backgroundColor: '#ebdcb2',
@@ -29,6 +35,7 @@ class Card extends PureComponent {
                 height: 18,
                 marginLeft: 5,
                 borderRadius: 90,
+                marginTop: 5,
               }}>
               <Text
                 style={{
@@ -41,7 +48,9 @@ class Card extends PureComponent {
                 {this.props.item.quantity}
               </Text>
             </View>
-            <Text style={{color: '#707c80', paddingLeft: 10}} numberOfLines={1}>
+            <Text
+              style={{color: '#707c80', paddingLeft: 10, marginTop: 11}}
+              numberOfLines={1}>
               {limdes}
             </Text>
           </View>
@@ -53,7 +62,7 @@ class Card extends PureComponent {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FDFFFC',
     marginBottom: 10,
     marginLeft: '4%',
     width: '93%',
@@ -66,6 +75,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 8,
     borderRadius: 3,
+    padding: 5,
   },
   cardImage: {
     width: 105,
@@ -73,6 +83,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     borderRadius: 3,
     borderColor: '#ddd',
+    // backgroundColor: 'https://media.istockphoto.com/vectors/caution-exclamation-mark-red-white-color-icon-isolated-vector-vector-id938976216?k=6&m=938976216&s=170667a&w=0&h=DLKR_3Bqw9tmgRwk8pnrfeNTBGEfxrccuwGI66zEQO4='
   },
   cardText: {
     // padding: 10,

@@ -63,11 +63,6 @@ const MainNavigator = createBottomTabNavigator(
     Categories,
     Profile,
   },
-  // {
-  //   tabBarOptions: {
-  //     backGround: 'transparent',
-  //   },
-  // },
   {
     initialRouteName: 'Products',
     defaultNavigationOptions: ({navigation}) => ({
@@ -77,12 +72,11 @@ const MainNavigator = createBottomTabNavigator(
           return (
             <Icon
               name="home"
-              // source={require('./src/public/icon/home.png')}
               style={{
                 width: 20,
                 height: 20,
               }}
-              // color="blue"
+              color="#ddbc95"
             />
           );
         }
@@ -90,25 +84,35 @@ const MainNavigator = createBottomTabNavigator(
           return (
             <Icon
               name="add-circle"
-              // source={require('./src/public/icon/home.png')}
               style={{
                 width: 20,
                 height: 20,
               }}
-              // color="blue"
+              color="#ddbc95"
             />
           );
         }
         if (routeName === 'Categories') {
-          return <Icon name="view-carousel" style={{width: 20, height: 20}} />;
+          return (
+            <Icon
+              name="view-carousel"
+              style={{width: 20, height: 20}}
+              color="#ddbc95"
+            />
+          );
         } else {
-          return <Icon name="face" style={{width: 20, height: 20}} />;
+          return (
+            <Icon name="face" style={{width: 20, height: 20}} color="#ddbc95" />
+          );
         }
       },
     }),
     tabBarOptions: {
-      activeTintColor: '#FF6F00',
+      activeTintColor: '#ddbc95',
       inactiveTintColor: '#263238',
+      style: {
+        backgroundColor: '#626d71',
+      },
     },
   },
 );
@@ -121,7 +125,7 @@ const AuthNavigator = createSwitchNavigator(
     App: MainNavigator,
   },
   {
-    initialRouteName: 'App',
+    initialRouteName: 'LoadingScreen',
   },
 );
 

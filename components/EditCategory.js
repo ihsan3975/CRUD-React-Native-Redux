@@ -50,7 +50,6 @@ export class EditCategory extends Component {
   };
 
   render() {
-    const item = this.state.products;
     return (
       <View style={styles.container}>
         <TextInput

@@ -39,12 +39,12 @@ export class Categories extends Component {
   getCategories() {
     // () => {
     // const { sort, sortBy, limit, page, key } = this.state;
-    axios.get(`http://192.168.1.18:4000/category`).then(response =>
+    axios.get(`http://192.168.43.83:4000/category`).then(response =>
       this.setState({
         categories: response.data.data,
       }),
     );
-    // console.log(this.state);
+    console.log(this.state);
     // };
   }
 
@@ -65,7 +65,14 @@ export class Categories extends Component {
           }}
         />
         <View
-          style={{flex: 1, backgroundColor: '#f1f2f6', position: 'relative'}}>
+          style={{
+            flex: 1,
+            backgroundColor: '#f1f2f6',
+            position: 'relative',
+            paddingTop: 40,
+            paddingLeft: 25,
+            paddingRight: 25,
+          }}>
           <FlatList
             style={styles.container}
             data={this.state.categories}
@@ -77,7 +84,7 @@ export class Categories extends Component {
                   backgroundColor: '#f0e0d0',
                   margin: 10,
                   alignItems: 'center',
-                  paddingTop: 5,
+                  paddingTop: 6,
                   borderRadius: 7,
                 }}
                 onPress={() =>
