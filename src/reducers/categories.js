@@ -74,7 +74,7 @@ const category = (state = initState, action) => {
         isLoading: false,
         isFulfilled: true,
         categoryList: initState.categoryList.map(categories => {
-          return categories.categoryid === newCategoryData.categoryid
+          return categories.id === newCategoryData.id
             ? newCategoryData
             : categories;
         }),

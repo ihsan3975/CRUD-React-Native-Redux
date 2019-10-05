@@ -28,6 +28,7 @@ export class CategoryById extends Component {
   };
 
   async componentDidMount() {
+    console.log('masuk gan')
     const id = this.props.navigation.getParam('id');
     console.log('coba yg ini');
 

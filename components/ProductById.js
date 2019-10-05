@@ -28,7 +28,7 @@ export class ProductById extends Component {
   };
 
   async componentDidMount() {
-    console.log(this.props.products.isLoading);
+    console.log('masuk gan');
     const id = this.props.navigation.getParam('id');
 
     await this.props.dispatch(getProductById(id));

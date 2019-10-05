@@ -26,13 +26,14 @@ import Categories from './components/Categories';
 import AddCategory from './components/AddCategory';
 import CategoryById from './components/CategoryById';
 import EditCategory from './components/EditCategory';
+import SplashScreen from './screens/SplashScreen'
 // import MainApp from './screens/footer/footer';
 
 const logger = createLogger();
 
 // import Routes from './Routes';
 
-// axios.defaults.baseURL = 'http://192.168.1.18:4000';
+axios.defaults.baseURL = 'http://192.168.43.83:4000';
 const store = createStore(reducer, applyMiddleware(logger, Rpm));
 
 const Routes = createStackNavigator(
@@ -122,10 +123,11 @@ const AuthNavigator = createSwitchNavigator(
     LoadingScreen,
     Login,
     Register,
+    SplashScreen,
     App: MainNavigator,
   },
   {
-    initialRouteName: 'LoadingScreen',
+    initialRouteName: 'SplashScreen',
   },
 );
 

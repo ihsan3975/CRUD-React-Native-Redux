@@ -30,28 +30,20 @@ export class ListProduct extends Component {
     sort: ''
   };
 
-  // delayedSearch = debounce(this.onChangeText, 1000)
-
   updateSearch = (search) => {
-    this.setState({search: search})
-    // this.debounce(this.onChangeText, 5000)
-    this.getProd()
+    this.setState({search: search}, ()=> this.getProd())
   }
   
   updateSort = (sort) => {
-    this.setState({sort: sort})
-    // this.debounce(this.onChangeText, 5000)
-    this.getProd()
+    this.setState({sort: sort}, ()=> this.getProd())
   }
   
   updateSortBy = (sortBy) => {
-    this.setState({sortBy: sortBy})
-    // this.debounce(this.onChangeText, 5000)
-    this.getProd()
+    this.setState({sortBy: sortBy}, ()=> this.getProd())
   }
 
   getProd() {
-    axios.get(`http://192.168.43.83:4000/products?key=${this.state.search}&sort=${this.state.sort}&sortBy=${this.state.sortBy}`).then(response =>
+    axios.get(`/products?key=${this.state.search}&sort=${this.state.sort}&sortBy=${this.state.sortBy}`).then(response =>
       this.setState({
         products: response.data.data,
       }),

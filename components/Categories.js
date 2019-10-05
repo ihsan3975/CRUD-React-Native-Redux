@@ -39,7 +39,7 @@ export class Categories extends Component {
   getCategories() {
     // () => {
     // const { sort, sortBy, limit, page, key } = this.state;
-    axios.get(`http://192.168.43.83:4000/category`).then(response =>
+    axios.get(`/category`).then(response =>
       this.setState({
         categories: response.data.data,
       }),
